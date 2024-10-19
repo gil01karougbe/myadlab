@@ -44,8 +44,6 @@ nxc smb 192.168.52.130 -u helpdesk -p YourS3cret
 ![alt text](assets/foothold.png)
 
 ### Note:
-```
 Members of helpdesks group (helpdesk) are local administrators on pc01. So this machine can be used as foothold on the taget active directory environement. 
-
+<br>
 With that being said future attacks an enumeration can be preformed form pc01 or from kali or even the host machine (Domain Non Joined Machine).
-```
