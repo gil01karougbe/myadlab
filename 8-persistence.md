@@ -11,7 +11,7 @@ years. In this lab i will explore:
 - Skeleton Key
 
 
-## Golden Ticket
+## 1-Golden Ticket
 ### dcsync
 With the da credentials with start a new process and perform a dcsync attack to extrat the credentials of the krbtgt account (the account of the Key Distribution Center Sservice).<br>
 ```powershell
@@ -47,7 +47,7 @@ Invoke-Mimi -Command '"kerberos::golden /User:Administrator /domain:corp.local /
 ![alt text](assets/persistence/golden2.png)<br>
 ![alt text](assets/persistence/golden5.png)<br>
 
-## Diamond Ticket
+## 2-Diamond Ticket
 One thing to always remember is that a Golden Ticket is a forged ticket, meaning there is no interaction with the KDC (Key Distribution Center). This can be detected by the Blue Team by monitoring for an AS-REP without a corresponding AS-REQ.<br>
 In contrast, the Diamond Ticket is more OPSEC-safe. In this attack, we first request a legitimate TGT (Ticket Granting Ticket) from the KDC. Then, using the krbtgt hash, we decode the TGT, modify it, and re-encode it before using it.
 
@@ -66,7 +66,7 @@ C:\AD\Tools\Rubeus.exe -args %Pwn% /krbkey:<> /user:stdent163 /password:UE6pj7Hv
 ![alt text](assets/persistence/golden5.png)<br>
 ![alt text](assets/persistence/golden5.png)<br>
 
-## AdminSDHolder
+## 3-AdminSDHolder
 [Read More](https://www.thehacker.recipes/ad/persistence/adminsdholder)<br>
 AdminSDHolder is a container in AD that holds the Security Descriptor applied to members of protected groups. The ACL can be viewed on the AdminSDHolder object itself. The Progation mechanisme that overwrite SD of protected groups and users with the SD of the  AdminSDHolder container runs every hour by default but can run at a different frequency by adding the value AdminSDProtectFrequency to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NTDS\Parameters`. This is likely to be noticed by the blue team, as there is a high chance that the AdminSDHolder SD is being monitored.
 
@@ -89,7 +89,7 @@ Invoke-SDPropagator -ShowProgress -Verbose -timeoutMinutes 1
 ![alt text](assets/persistence/adminsd4.png)<br>
 With this, the helpdesk user has Full Control over all protected groups and users. To revert, simply remove the helpdesk ACE from AdminSDHolder and force the propagation again.
 
-## Remote Services/Protocoles SD
+## 4-Remote Services/Protocoles SD
 
 ### Remote Registry
 ```powershell
@@ -121,8 +121,9 @@ Enter-PSSession -ComputerName WIN-4E30GDH8UQ6.corp.local
 ![alt text](assets/persistence/pr1.png)<br>
 ![alt text](assets/persistence/pr2.png)<br>
 
-## DSRM
-DSRM sands for Directory Services Restore Mode and on every DC the local admin "Administrator" is the DSRM account. His password i set when promoting the DC...[Read More](https://www.hackingarticles.in/domain-persistence-dsrm/)<br>
+## 5-DSRM
+DSRM sands for Directory Services Restore Mode and on every DC the local admin "Administrator" is the DSRM account. His password i set when promoting the DC[Read More Here](https://www.hackingarticles.in/domain-persistence-dsrm/)<br>
+
 ![alt text](assets/persistence/dsrm1.png)<br>
 
 ### Creds Extraction
@@ -161,7 +162,7 @@ Invoke-Mimi -Command '"sekurlsa::pth /user:Administrator /domain:corp.local /rc4
 - DSRM passwords should be changed regularly at least once a month.
 
 
-## Skeleton Key
+## 6-Skeleton Key
 ![alt text](assets/persistence/skeletonkey1.png)<br>
 [Read More](https://www.thehacker.recipes/ad/persistence/skeleton-key/)<br>
 ```powershell
