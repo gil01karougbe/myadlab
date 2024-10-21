@@ -1,10 +1,12 @@
 ### Users Description
+```powershell
+Get-DomainUser | select samaccountname, Description
+```
 
 ### ASREProasting
 
 
 ### KERBroasting
-
 
 ### GenericAll Abuse
 ```powershell
