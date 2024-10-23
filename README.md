@@ -14,7 +14,7 @@
 ### Part2: ADCS
 ESC1 to ESC4 and ESC7
 
-### Part3: Persitence Techniques
+## Persitence Techniques
 - Golden Ticket
 - Diamond Ticket
 - AdminSDHolder
